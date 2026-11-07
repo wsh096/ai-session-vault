@@ -1,8 +1,14 @@
 # 🚀 AI Session Universal Vault & Lifecycle Manager
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-brightgreen.svg)]()
-[![Agent Support](https://img.shields.io/badge/Agents-Codex%20%7C%20Orca%20%7C%20Claude%20%7C%20Cline-orange.svg)]()
+<p align="center">
+  <b>English</b> | <a href="README.ko.md">한국어</a> | <a href="README.ja.md">日本語</a>
+</p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
+  <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-brightgreen.svg" alt="Platform">
+  <img src="https://img.shields.io/badge/Agents-Codex%20%7C%20Orca%20%7C%20Claude%20%7C%20Cline-orange.svg" alt="Agent Support">
+</p>
 
 > **Ultra-lightweight tiered storage & lossless lifecycle manager for autonomous AI agent sessions.**  
 > Keep your local NVMe/SSD lean without ever losing past context, prompts, or conversation restore points.
@@ -82,6 +88,9 @@ ai-session-vault/
 ├── config.example.json         # Configuration template (Paths, idle days, cloud remote)
 ├── session_index.sample.json   # Anonymized sample dataset for instant preview
 ├── LICENSE                     # MIT License
+├── README.md                   # English Documentation
+├── README.ko.md                # 한국어 문서
+├── README.ja.md                # 日本語ドキュメント
 └── tools/
     ├── indexer.ps1             # Scans agent directories & extracts metadata
     ├── archive_engine.ps1      # Compresses idle sessions & uploads to cloud
