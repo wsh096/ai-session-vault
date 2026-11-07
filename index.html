@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Session Universal Vault - Visual Explorer</title>
+<style>
+  :root {
+    --bg: #0b0f19;
+    --card: #151d30;
+    --card-hover: #1c2742;
+    --border: #23314e;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --primary: #38bdf8;
+    --primary-hover: #0ea5e9;
+    --accent: #a855f7;
+    --codex: #10b981;
+    --orca: #f59e0b;
+    --claude: #ec4899;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    padding: 24px;
+    line-height: 1.5;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+  header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .title-group h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .title-group p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .badge-demo {
+    background: rgba(168, 85, 247, 0.2);
+    border: 1px solid var(--accent);
+    color: #d8b4fe;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .search-box {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .search-input {
+    flex: 1;
+    min-width: 280px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: #fff;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .search-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+  }
+  .filter-select {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+  }
+  .filter-select:focus { border-color: var(--primary); }
+  .stats-bar {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .session-list { display: flex; flex-direction: column; gap: 12px; }
+  .session-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.15s, border-color 0.2s;
+  }
+  .session-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+  }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .badge-codex { background: rgba(16, 185, 129, 0.15); color: var(--codex); border: 1px solid var(--codex); }
+  .badge-orca { background: rgba(245, 158, 11, 0.15); color: var(--orca); border: 1px solid var(--orca); }
+  .badge-claude { background: rgba(236, 72, 153, 0.15); color: var(--claude); border: 1px solid var(--claude); }
+  .badge-archive { background: rgba(148, 163, 184, 0.15); color: var(--muted); border: 1px solid var(--border); }
+  .project-title { font-size: 16px; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 8px; }
+  .date-time { font-size: 13px; color: var(--muted); }
+  .prompt-preview {
+    color: #e2e8f0;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px 14px;
+    border-radius: 6px;
+    border-left: 3px solid var(--primary);
+  }
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--muted);
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .session-id { font-family: monospace; color: #94a3b8; }
+  .btn-group { display: flex; gap: 8px; }
+  .btn {
+    background: #23314e;
+    border: none;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: var(--primary); color: #0b0f19; }
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #10b981;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="title-group">
+      <h1>🚀 AI Session Universal Vault</h1>
+      <p>Instant search, exploration, and seamless restoration for AI agent session histories</p>
+    </div>
+    <div id="statusBadge" class="badge-demo">Loading...</div>
+  </header>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search by Project, Prompt, Session ID, or Path (e.g. ecommerce, rag, fix)..." />
+    <select id="agentFilter" class="filter-select">
+      <option value="ALL">All Agents</option>
+    </select>
+    <select id="monthFilter" class="filter-select">
+      <option value="ALL">All Periods</option>
+    </select>
+  </div>
+
+  <div class="stats-bar">
+    <span id="resultCount">Showing 0 sessions</span>
+    <span>💡 Click <b>Copy ID</b> to use with <code>Restore.bat</code></span>
+  </div>
+
+  <div id="sessionList" class="session-list"></div>
+  <div id="emptyState" class="empty-state" style="display:none;">
+    <h3>No matching sessions found</h3>
+    <p>Try searching with another keyword or resetting filters.</p>
+  </div>
+</div>
+
+<div id="toast" class="toast">Copied to clipboard!</div>
+
+<script>
+let allSessions = [];
+const searchInput = document.getElementById('searchInput');
+const agentFilter = document.getElementById('agentFilter');
+const monthFilter = document.getElementById('monthFilter');
+const sessionList = document.getElementById('sessionList');
+const resultCount = document.getElementById('resultCount');
+const emptyState = document.getElementById('emptyState');
+const statusBadge = document.getElementById('statusBadge');
+const toast = document.getElementById('toast');
+
+function showToast(text) {
+  toast.innerText = text;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+function copyText(val, label) {
+  navigator.clipboard.writeText(val).then(() => {
+    showToast(label + ' copied to clipboard!');
+  });
+}
+
+async function loadData() {
+  try {
+    const res = await fetch('session_index.json');
+    if (!res.ok) throw new Error('Real index not found');
+    allSessions = await res.json();
+    statusBadge.innerText = `${allSessions.length.toLocaleString()} Sessions Indexed`;
+    statusBadge.style.background = 'rgba(16, 185, 129, 0.2)';
+    statusBadge.style.borderColor = 'var(--codex)';
+    statusBadge.style.color = '#6ee7b7';
+  } catch (e) {
+    try {
+      const resSample = await fetch('session_index.sample.json');
+      allSessions = await resSample.json();
+      statusBadge.innerText = `Sample Demo Mode (${allSessions.length} sessions)`;
+    } catch (e2) {
+      statusBadge.innerText = 'No Index File Found';
+      allSessions = [];
+    }
+  }
+  populateFilters();
+  render();
+}
+
+function populateFilters() {
+  const agents = new Set();
+  const months = new Set();
+  allSessions.forEach(s => {
+    if (s.src) agents.add(s.src);
+    if (s.date && s.date.length >= 7) months.add(s.date.substring(0, 7));
+  });
+
+  agents.forEach(a => {
+    const opt = document.createElement('option');
+    opt.value = a;
+    opt.innerText = a;
+    agentFilter.appendChild(opt);
+  });
+
+  Array.from(months).sort().reverse().forEach(m => {
+    const opt = document.createElement('option');
+    opt.value = m;
+    opt.innerText = m;
+    monthFilter.appendChild(opt);
+  });
+}
+
+function render() {
+  const q = searchInput.value.toLowerCase().trim();
+  const agent = agentFilter.value;
+  const month = monthFilter.value;
+
+  const filtered = allSessions.filter(s => {
+    if (agent !== 'ALL' && s.src !== agent) return false;
+    if (month !== 'ALL' && (!s.date || !s.date.startsWith(month))) return false;
+    if (!q) return true;
+
+    return (s.project && s.project.toLowerCase().includes(q)) ||
+           (s.preview && s.preview.toLowerCase().includes(q)) ||
+           (s.id && s.id.toLowerCase().includes(q)) ||
+           (s.cwd && s.cwd.toLowerCase().includes(q));
+  });
+
+  resultCount.innerText = `Showing ${filtered.length.toLocaleString()} of ${allSessions.length.toLocaleString()} sessions`;
+
+  if (filtered.length === 0) {
+    sessionList.innerHTML = '';
+    emptyState.style.display = 'block';
+    return;
+  }
+
+  emptyState.style.display = 'none';
+  const html = filtered.slice(0, 100).map(s => {
+    const badgeClass = s.src === 'Codex' ? 'badge-codex' : (s.src === 'Orca' ? 'badge-orca' : 'badge-claude');
+    return `
+      <div class="session-card">
+        <div class="card-header">
+          <div class="project-title">
+            <span class="badge ${badgeClass}">${escapeHtml(s.src || 'AI')}</span>
+            <span>${escapeHtml(s.project || 'Untitled Project')}</span>
+          </div>
+          <span class="date-time">${escapeHtml(s.date || '')}</span>
+        </div>
+        <div class="prompt-preview">
+          "${escapeHtml(s.preview || 'No prompt preview available')}"
+        </div>
+        <div class="card-footer">
+          <span class="session-id">ID: ${escapeHtml(s.id || '')}</span>
+          <div class="btn-group">
+            <span class="badge badge-archive">📦 ${escapeHtml(s.archive || 'Local')}</span>
+            <button class="btn" onclick="copyText('${escapeJs(s.id)}', 'Session ID')">Copy ID</button>
+            <button class="btn" onclick="copyText('${escapeJs(s.id)}', 'Restore')">Restore</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  sessionList.innerHTML = html;
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function escapeJs(str) {
+  if (!str) return '';
+  return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+}
+
+searchInput.addEventListener('input', render);
+agentFilter.addEventListener('change', render);
+monthFilter.addEventListener('change', render);
+
+loadData();
+</script>
+</body>
+</html>

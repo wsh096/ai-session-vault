@@ -1,0 +1,62 @@
+[
+  {
+    "id": "c1a2b3c4-d5e6-7890-abcd-ef0123456789",
+    "src": "Codex",
+    "project": "nextjs-ecommerce-storefront",
+    "date": "2026-07-15 14:22:10",
+    "cwd": "C:/Projects/nextjs-ecommerce-storefront",
+    "preview": "Refactor checkout flow to support Stripe webhook idempotency and optimized cart state caching",
+    "archive": "Codex_2026_07.zip",
+    "rel": "2026/07/15/c1a2b3c4-d5e6-7890-abcd-ef0123456789"
+  },
+  {
+    "id": "e2f3a4b5-c6d7-8901-bcde-f01234567890",
+    "src": "Orca",
+    "project": "fastapi-rag-search-service",
+    "date": "2026-07-28 09:45:00",
+    "cwd": "C:/Projects/fastapi-rag-search-service",
+    "preview": "Implement hybrid dense-sparse vector search using Qdrant and BM25 reranking with cross-encoders",
+    "archive": "Orca_2026_07.zip",
+    "rel": "2026/07/28/e2f3a4b5-c6d7-8901-bcde-f01234567890"
+  },
+  {
+    "id": "f3a4b5c6-d7e8-9012-cdef-012345678901",
+    "src": "Codex",
+    "project": "k8s-infra-terraform",
+    "date": "2026-08-04 16:10:30",
+    "cwd": "C:/Projects/k8s-infra-terraform",
+    "preview": "Provision EKS cluster with Karpenter autoscaling and Prometheus Grafana monitoring stack",
+    "archive": "Codex_2026_08.zip",
+    "rel": "2026/08/04/f3a4b5c6-d7e8-9012-cdef-012345678901"
+  },
+  {
+    "id": "a4b5c6d7-e8f9-0123-def0-123456789012",
+    "src": "Orca",
+    "project": "flutter-mobile-app",
+    "date": "2026-08-19 11:35:12",
+    "cwd": "C:/Projects/flutter-mobile-app",
+    "preview": "Fix Bluetooth Low Energy connection drop on Android 15 background service sleep cycle",
+    "archive": "Orca_2026_08.zip",
+    "rel": "2026/08/19/a4b5c6d7-e8f9-0123-def0-123456789012"
+  },
+  {
+    "id": "b5c6d7e8-f9a0-1234-ef01-234567890123",
+    "src": "Codex",
+    "project": "rust-network-proxy",
+    "date": "2026-09-02 20:15:45",
+    "cwd": "C:/Projects/rust-network-proxy",
+    "preview": "Benchmark Tokio asynchronous TCP throughput under 100k concurrent connections with zero-copy buffer",
+    "archive": "Codex_2026_09.zip",
+    "rel": "2026/09/02/b5c6d7e8-f9a0-1234-ef01-234567890123"
+  },
+  {
+    "id": "c6d7e8f9-a0b1-2345-f012-345678901234",
+    "src": "Orca",
+    "project": "data-pipeline-airflow",
+    "date": "2026-09-22 17:05:00",
+    "cwd": "C:/Projects/data-pipeline-airflow",
+    "preview": "Build daily Parquet ETL DAG pulling from Postgres RDS into Snowflake data warehouse with dbt models",
+    "archive": "Orca_2026_09.zip",
+    "rel": "2026/09/22/c6d7e8f9-a0b1-2345-f012-345678901234"
+  }
+]

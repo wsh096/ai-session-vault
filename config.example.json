@@ -1,0 +1,29 @@
+{
+  "vaultName": "AI_Session_Vault",
+  "idleDaysThreshold": 30,
+  "cloudRemote": "gdrive:AI_Session_Vault",
+  "compression": {
+    "format": "zip",
+    "grouping": "monthly"
+  },
+  "agentTargets": [
+    {
+      "name": "Codex",
+      "path": "%USERPROFILE%/.codex/sessions",
+      "sessionPattern": "rollout-*.jsonl",
+      "enabled": true
+    },
+    {
+      "name": "Orca",
+      "path": "%APPDATA%/orca/codex-runtime-home/home/sessions",
+      "sessionPattern": "rollout-*.jsonl",
+      "enabled": true
+    },
+    {
+      "name": "ClaudeCode",
+      "path": "%USERPROFILE%/.claude/sessions",
+      "sessionPattern": "*.jsonl",
+      "enabled": false
+    }
+  ]
+}

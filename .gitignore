@@ -1,0 +1,35 @@
+# ==========================================
+# AI Session Vault - Sensitive & Local Files
+# ==========================================
+
+# Secrets, Tokens, and Credentials
+*.token
+*.key
+*.pem
+rclone.conf
+.env
+.env.local
+.env.*.local
+
+# Real User Session Index & Logs
+session_index.json
+*.jsonl
+*.log
+
+# Compressed Session Archives (Cold Tier)
+archives/
+*.zip
+*.tar.gz
+*.7z
+
+# Temporary / Scratch directories
+cache/
+tmp/
+temp/
+
+# OS & IDE metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
